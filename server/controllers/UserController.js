@@ -2,8 +2,9 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { findUser, registerUser } from "../service/userService.js";
 import AppSuccess from "../utils/response-handlers/AppSuccess.js";
+import AppError from "../utils/response-handlers/AppError.js";
 
-export const register = async (req, res) => {
+export const register = async (req, res, next) => {
   const { username, password } = req.body;
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -13,28 +14,32 @@ export const register = async (req, res) => {
       password: hashedPassword,
     });
 
-    res.status(201).json({ message: "User registered successfully" });
+    return next(new AppSuccess(newUser, "User registered successfully", 201));
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    return next(new AppError(error.message, 400));
   }
 };
 
 export const login = async (req, res, next) => {
   const { username, password } = req.body;
-  console.log(username, password);
+
   try {
     const user = await findUser({ username });
-    if (!user) return res.status(404).json({ error: "User not found" });
+
+    if (!user) return next(new AppError("User not found", 404));
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ error: "Invalid credentials" });
+
+    if (!isMatch) return next(new AppError("Invalid credentials", 400));
 
     const token = jwt.sign({ userId: user._id }, "secretKey", {
       expiresIn: "1h",
     });
-    res.json({ token });
-    // return next(new AppSuccess({ user, token }, "User logged in successfully", 200));
+
+    return next(
+      new AppSuccess({ user, token }, "User logged in successfully", 200)
+    );
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    return next(new AppError(error.message, 400));
   }
 };
