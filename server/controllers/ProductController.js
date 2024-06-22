@@ -1,10 +1,12 @@
-import Product from "../models/Product";        
+import { createProduct, find, findOne } from "../service/productService";
+import AppError from "../utils/response-handlers/AppError";
+import AppSuccess from "../utils/response-handlers/AppSuccess";
 
-export const addProduct = async (req, res) => {
+export const addProduct = async (req, res, next) => {
   const { name, description, quantity, price } = req.body;
   const userId = req.userId;
   try {
-    const newProduct = new Product({
+    const newProduct = await createProduct({
       userId,
       name,
       description,
@@ -13,34 +15,38 @@ export const addProduct = async (req, res) => {
       history: [{ quantity }],
     });
     await newProduct.save();
-    res.status(201).json({ message: "Product added successfully" });
+
+    return next(new AppSuccess(newProduct, "Product added successfully", 201));
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    return next(new AppError(error.message, 400));
   }
 };
 
-export const updateProductQuantity = async (req, res) => {
+export const updateProductQuantity = async (req, res, next) => {
   const { productId, quantity } = req.body;
   const userId = req.userId;
   try {
-    const product = await Product.findOne({ _id: productId, userId });
-    if (!product) return res.status(404).json({ error: "Product not found" });
+    const product = await findOne({ _id: productId, userId });
+    if (!product) return next(new AppError("Product not found", 404));
 
     product.quantity = quantity;
     product.history.push({ quantity });
     await product.save();
-    res.json({ message: "Product quantity updated successfully" });
+
+    return next(
+      new AppSuccess(product, "Product quantity updated successfully", 200)
+    );
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    return next(new AppError(error.message, 400));
   }
 };
 
-export const getUserProducts = async (req, res) => {
+export const getUserProducts = async (req, res, next) => {
   const userId = req.userId;
   try {
-    const products = await Product.find({ userId });
-    res.json(products);
+    const products = await find({ userId });
+    return next(new AppSuccess(products, "Products fetched successfully", 200));
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    return next(new AppError(error.message, 400));
   }
 };
