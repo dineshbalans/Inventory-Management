@@ -5,6 +5,7 @@ import userRouter from "./routes/userRoutes.js";
 import globalResponseController from "./utils/response-handlers/GlobalResponseController.js";
 import productRouter from "./routes/productRoutes.js";
 import invoiceRouter from "./routes/invoiceRouter.js";
+import auth from "./middleware/auth.js";
 
 const app = express();
 app.use(bodyParser.json());
@@ -25,8 +26,8 @@ mongoose
   .catch((err) => console.log(err));
 
 app.use("/api/v1/user", userRouter);
-app.use("/api/v1/product", productRouter);
-app.use("/api/v1/invoice", invoiceRouter);
+app.use("/api/v1/product", auth, productRouter);
+app.use("/api/v1/invoice", auth, invoiceRouter);
 
 app.use(globalResponseController);
 
