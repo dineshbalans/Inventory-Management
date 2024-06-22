@@ -6,7 +6,7 @@ import {
 } from "../controllers/ProductController.js";
 const productRouter = express.Router();
 
-productRouter.post("/get", addProduct);
+productRouter.post("/create", addProduct);
 productRouter.put("/update", updateProductQuantity);
 productRouter.get("/getAll", getUserProducts);
 
