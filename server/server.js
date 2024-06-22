@@ -7,7 +7,10 @@ import globalResponseController from "./utils/response-handlers/GlobalResponseCo
 const app = express();
 app.use(bodyParser.json());
 
+// Local MongoDB URL
 // const DB_URL = "mongodb://localhost:27017/inventory";
+
+// Cloud MongoDB URL
 const DB_URL =
   "mongodb+srv://dineshbalansrinivasan:dEhzlFoCnGA6S6Aw@cluster0.vvwnygw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
@@ -25,6 +28,3 @@ app.use(globalResponseController);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-
-// dEhzlFoCnGA6S6Aw;
-// dineshbalansrinivasan;
