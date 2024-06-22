@@ -1,4 +1,4 @@
-# Inventory Management System (React + Express + MongoDB ) - [Dinesh Balansrinivasan](https://github.com/dineshbalans)
+# Inventory Management System (React JS + Express JS + MongoDB ) - [Dinesh Balan Srinivasan](https://github.com/dineshbalans)
 
 ## Table of Contents
 
