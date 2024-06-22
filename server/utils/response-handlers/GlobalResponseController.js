@@ -17,7 +17,7 @@ const sendErr = (err, res) => {
   });
 };
 
-exports.globalResponseController = (data, req, res, next) => {
+const globalResponseController = (data, req, res, next) => {
   if (data.statusCode === 200 || data.statusCode === 201) {
     sendResponse(data, res);
   } else {
@@ -25,4 +25,4 @@ exports.globalResponseController = (data, req, res, next) => {
   }
 };
 
-// module.exports = globalResponseController;
+export default globalResponseController;

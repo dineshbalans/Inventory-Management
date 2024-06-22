@@ -1,5 +1,6 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+import mongoose from "mongoose";
+const { Schema } = mongoose;
+
 
 const InvoiceSchema = new Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
@@ -17,4 +18,4 @@ const InvoiceSchema = new Schema({
   date: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model("Invoice", InvoiceSchema);
+export default mongoose.model("Invoice", InvoiceSchema);

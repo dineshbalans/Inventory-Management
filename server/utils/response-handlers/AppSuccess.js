@@ -6,4 +6,4 @@ class AppSuccess {
     this.data = data != undefined ? data : null;
   }
 }
-module.exports = AppSuccess;
+export default AppSuccess;

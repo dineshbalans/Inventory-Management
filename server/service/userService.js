@@ -1,12 +1,12 @@
-const User = require("../models/User");
+import User from "../models/User.js";
 
-exports.registerUser = async (data) => {
+export const registerUser = async (data) => {
   const user = new User(data);
   await user.save();
   return user;
 };
 
-exports.findUser = async (data) => {
+export const findUser = async (data) => {
   const user = await User.findOne(data);
   return user;
 };
