@@ -1,7 +1,7 @@
-import { create, find } from "../service/invoiceService";
-import { findOne } from "../service/productService";
-import AppError from "../utils/response-handlers/AppError";
-import AppSuccess from "../utils/response-handlers/AppSuccess";
+import { create, find } from "../service/invoiceService.js";
+import { findOne } from "../service/productService.js";
+import AppError from "../utils/response-handlers/AppError.js";
+import AppSuccess from "../utils/response-handlers/AppSuccess.js";
 
 export const createInvoice = async (req, res, next) => {
   const { products } = req.body; // Array of { productId, quantity }
