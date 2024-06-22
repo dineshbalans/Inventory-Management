@@ -1,6 +1,6 @@
-import { createProduct, find, findOne } from "../service/productService";
-import AppError from "../utils/response-handlers/AppError";
-import AppSuccess from "../utils/response-handlers/AppSuccess";
+import { createProduct, find, findOne } from "../service/productService.js";
+import AppError from "../utils/response-handlers/AppError.js";
+import AppSuccess from "../utils/response-handlers/AppSuccess.js";
 
 export const addProduct = async (req, res, next) => {
   const { name, description, quantity, price } = req.body;

@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import userRouter from "./routes/userRoutes.js";
 import globalResponseController from "./utils/response-handlers/GlobalResponseController.js";
+import productRouter from "./routes/productRoutes.js";
 
 const app = express();
 app.use(bodyParser.json());
@@ -23,6 +24,7 @@ mongoose
   .catch((err) => console.log(err));
 
 app.use("/api/v1/user", userRouter);
+app.use("/api/v1/product", productRouter);
 
 app.use(globalResponseController);
 
