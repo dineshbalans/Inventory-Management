@@ -5,13 +5,19 @@ import {
   updateProductQuantity,
 } from "../services/api";
 import ProtectedRoute from "../components/ProtectedRoute";
+import { useDispatch, useSelector } from "react-redux";
+import { getToken } from "../utils/token";
+import { productActions } from "../store/productSlice";
 
-const InventoryPage = ({ token }) => {
-  const [products, setProducts] = useState([]);
+const InventoryPage = () => {
+  const dispatch = useDispatch();
+
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [quantity, setQuantity] = useState("");
   const [price, setPrice] = useState("");
+
+  const { products } = useSelector((state) => state.product);
 
   useEffect(() => {
     fetchProducts();
@@ -19,8 +25,10 @@ const InventoryPage = ({ token }) => {
 
   const fetchProducts = async () => {
     try {
-      const { data } = await getUserProducts(token);
-      setProducts(data);
+      const { data: res } = await getUserProducts(getToken());
+      if (res.statusCode === 200 || res.statusCode === 201) {
+        dispatch(productActions.setProducts(res.data));
+      }
     } catch (error) {
       console.error("Failed to fetch products", error);
     }
@@ -29,7 +37,7 @@ const InventoryPage = ({ token }) => {
   const handleAddProduct = async (e) => {
     e.preventDefault();
     try {
-      await addProduct(token, { name, description, quantity, price });
+      await addProduct(getToken(), { name, description, quantity, price });
       fetchProducts();
     } catch (error) {
       console.error("Failed to add product", error);
@@ -38,12 +46,14 @@ const InventoryPage = ({ token }) => {
 
   const handleUpdateQuantity = async (productId, newQuantity) => {
     try {
-      await updateProductQuantity(token, productId, newQuantity);
+      await updateProductQuantity(getToken(), productId, newQuantity);
       fetchProducts();
     } catch (error) {
       console.error("Failed to update product quantity", error);
     }
   };
+
+  console.log(products);
 
   return (
     <ProtectedRoute>
@@ -88,7 +98,7 @@ const InventoryPage = ({ token }) => {
           </tr>
         </thead>
         <tbody>
-          {products.map((product) => (
+          {products?.map((product) => (
             <tr key={product._id}>
               <td>{product.name}</td>
               <td>{product.description}</td>

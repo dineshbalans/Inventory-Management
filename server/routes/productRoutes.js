@@ -4,6 +4,7 @@ import {
   getUserProducts,
   updateProductQuantity,
 } from "../controllers/ProductController.js";
+import auth from "../middleware/auth.js";
 const productRouter = express.Router();
 
 productRouter.post("/create", addProduct);

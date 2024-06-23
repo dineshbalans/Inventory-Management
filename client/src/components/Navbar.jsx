@@ -5,12 +5,14 @@ import { Link, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../services/api.js";
 import { uiActions } from "../store/uiSlice.jsx";
+import { removeToken } from "../utils/token.js";
 
 const Navbar = () => {
   const { isAuth } = useSelector((state) => state.ui);
   const dispatch = useDispatch();
 
   const logOutHandler = () => {
+    removeToken();
     logout()
       .then(() => {
         dispatch(uiActions.setIsAuth(false));

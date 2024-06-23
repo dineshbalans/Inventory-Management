@@ -28,7 +28,7 @@ export const updateProductQuantity = async (req, res, next) => {
   try {
     const product = await findOne({ _id: productId, userId });
     if (!product) return next(new AppError("Product not found", 404));
-
+    console.log(quantity)
     product.quantity = quantity;
     product.history.push({ quantity });
     await product.save();

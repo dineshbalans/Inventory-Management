@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { createInvoice, getUserProducts } from "../services/api";
+import { useDispatch, useSelector } from "react-redux";
+import { productActions } from "../store/productSlice";
+import { getToken } from "../utils/token";
 
 const InvoicePage = ({ token }) => {
-  const [products, setProducts] = useState([]);
+  const dispatch = useDispatch();
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [totalCost, setTotalCost] = useState(0);
+  const { products } = useSelector((state) => state.product);
 
   useEffect(() => {
-    fetchProducts();
+    if (products.length === 0) {
+      fetchProducts();
+    }
   }, []);
 
   useEffect(() => {
@@ -16,8 +22,10 @@ const InvoicePage = ({ token }) => {
 
   const fetchProducts = async () => {
     try {
-      const { data } = await getUserProducts(token);
-      setProducts(data);
+      const { data: res } = await getUserProducts(getToken());
+      if (res.statusCode === 200 || res.statusCode === 201) {
+        dispatch(productActions.setProducts(res.data));
+      }
     } catch (error) {
       console.error("Failed to fetch products", error);
     }
@@ -43,7 +51,7 @@ const InvoicePage = ({ token }) => {
 
   const handleCreateInvoice = async () => {
     try {
-      await createInvoice(token, selectedProducts);
+      await createInvoice(getToken(), selectedProducts);
       setSelectedProducts([]);
       setTotalCost(0);
     } catch (error) {

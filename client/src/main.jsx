@@ -10,6 +10,8 @@ import UserLayout from "./pages/layout/UserLayout.jsx";
 import RegisterPage from "./pages/RegisterPage.jsx";
 import store from "./store/store.jsx";
 import InventoryPage from "./pages/InventoryPage.jsx";
+import InvoicePage from "./pages/InvoicePage.jsx";
+import InvoicesPage from "./pages/InvoicesPage.jsx";
 
 const routes = createBrowserRouter([
   {
@@ -39,14 +41,20 @@ const routes = createBrowserRouter([
         path: "inventory",
         element: <InventoryPage />,
       },
+      {
+        path: "invoice",
+        element: <InvoicePage />,
+      },
+      {
+        path: "invoices",
+        element: <InvoicesPage />,
+      },
     ],
   },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <RouterProvider router={routes} />
-    </Provider>
-  </React.StrictMode>
+  <Provider store={store}>
+    <RouterProvider router={routes} />
+  </Provider>
 );

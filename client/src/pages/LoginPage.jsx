@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { uiActions } from "../store/uiSlice";
+import { setToken } from "../utils/token";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ const LoginPage = () => {
       const { data } = await login(username, password);
       if (data.statusCode === 200 || data.statusCode === 201) {
         dispatch(uiActions.setIsAuth());
+        setToken(data.data.token);
         navigate("/inventory");
       }
 

@@ -6,10 +6,14 @@ import AppSuccess from "../utils/response-handlers/AppSuccess.js";
 export const createInvoice = async (req, res, next) => {
   const { products } = req.body; // Array of { productId, quantity }
   const userId = req.userId;
+
+  console.log(products);
   try {
     let totalCost = 0;
     for (let { productId, quantity } of products) {
       const product = await findOne({ _id: productId, userId });
+      console.log(product);
+      console.log(quantity);
 
       if (!product || product.quantity < quantity) {
         return next(
@@ -22,8 +26,9 @@ export const createInvoice = async (req, res, next) => {
       product.history.push({ quantity: product.quantity });
       await product.save();
     }
+    console.log(userId, products, totalCost);
 
-    const newInvoice = create({ userId, products, totalCost });
+    const newInvoice = await create({ userId, products, totalCost });
     await newInvoice.save();
     return next(
       new AppSuccess(newInvoice, "Invoice created successfully", 201)

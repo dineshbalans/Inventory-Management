@@ -5,19 +5,19 @@ export const navBarData = [
     path: "/",
   },
   {
-    id: "nbdId_2",
-    name: "Login",
-    path: "/user/login",
-  },
-  {
     id: "nbdId_3",
     name: "Inventory",
     path: "/inventory",
   },
   {
+    id: "nbdId_2",
+    name: "Invoice",
+    path: "/invoice",
+  },
+  {
     id: "nbdId_4",
-    name: "Register",
-    path: "/user/register",
+    name: "Invoices",
+    path: "/invoices",
   },
 ];
 
