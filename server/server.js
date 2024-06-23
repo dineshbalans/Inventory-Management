@@ -33,12 +33,24 @@ mongoose
   .catch((err) => console.log(err));
 
 app.use(cookieParser());
+// CORS configuration
+const allowedOrigins = [
+  "https://inventory-management-trga.onrender.com",
+  "http://localhost:5000",
+  "http://localhost:5173",
+];
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://inventory-management-trga.onrender.com/",
-    ],
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps, curl requests)
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) === -1) {
+        const msg =
+          "The CORS policy for this site does not allow access from the specified Origin.";
+        return callback(new Error(msg), false);
+      }
+      return callback(null, true);
+    },
     credentials: true,
   })
 );
@@ -49,9 +61,9 @@ app.use("/api/v1/user", userRouter);
 app.use("/api/v1/product", auth, productRouter);
 app.use("/api/v1/invoice", auth, invoiceRouter);
 
-app.use(express.static(path.join(__dirname, "./dist")));
+app.use(express.static(path.join(__dirname, "../client/dist")));
 app.get("/", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "./dist/index.html"));
+  res.sendFile(path.resolve(__dirname, "../client/dist/index.html"));
 });
 
 app.use(globalResponseController);
