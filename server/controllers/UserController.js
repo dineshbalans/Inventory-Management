@@ -14,7 +14,13 @@ export const register = async (req, res, next) => {
       password: hashedPassword,
     });
 
-    return next(new AppSuccess(newUser, "User registered successfully", 201));
+    return next(
+      new AppSuccess(
+        { username: newUser.username },
+        "User registered successfully",
+        201
+      )
+    );
   } catch (error) {
     return next(new AppError(error.message, 400));
   }
@@ -34,6 +40,12 @@ export const login = async (req, res, next) => {
 
     const token = jwt.sign({ userId: user._id }, "secretKey", {
       expiresIn: "1h",
+    });
+
+    res.cookie("jwt", token, {
+      httpOnly: true,
+      sameSite: "none",
+      secure: false, // false for development only
     });
 
     return next(

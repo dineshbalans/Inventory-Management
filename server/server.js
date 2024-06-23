@@ -6,6 +6,8 @@ import globalResponseController from "./utils/response-handlers/GlobalResponseCo
 import productRouter from "./routes/productRoutes.js";
 import invoiceRouter from "./routes/invoiceRouter.js";
 import auth from "./middleware/auth.js";
+import cookieParser from "cookie-parser";
+import cors from "cors";
 
 const app = express();
 app.use(bodyParser.json());
@@ -24,6 +26,11 @@ mongoose
   })
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.log(err));
+
+app.use(cookieParser());
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/product", auth, productRouter);

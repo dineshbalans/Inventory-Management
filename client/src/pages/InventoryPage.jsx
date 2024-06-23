@@ -4,6 +4,7 @@ import {
   getUserProducts,
   updateProductQuantity,
 } from "../services/api";
+import ProtectedRoute from "../components/ProtectedRoute";
 
 const InventoryPage = ({ token }) => {
   const [products, setProducts] = useState([]);
@@ -45,7 +46,7 @@ const InventoryPage = ({ token }) => {
   };
 
   return (
-    <div>
+    <ProtectedRoute>
       <form onSubmit={handleAddProduct}>
         <input
           type="text"
@@ -106,7 +107,7 @@ const InventoryPage = ({ token }) => {
           ))}
         </tbody>
       </table>
-    </div>
+    </ProtectedRoute>
   );
 };
 

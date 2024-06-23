@@ -7,7 +7,7 @@ export const navBarData = [
   {
     id: "nbdId_2",
     name: "Login",
-    path: "/login",
+    path: "/user/login",
   },
   {
     id: "nbdId_3",
@@ -17,6 +17,6 @@ export const navBarData = [
   {
     id: "nbdId_4",
     name: "Register",
-    path: "/register",
+    path: "/user/register",
   },
 ];

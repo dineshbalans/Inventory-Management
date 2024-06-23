@@ -3,11 +3,23 @@ import axios from "axios";
 const API_URL = "http://localhost:5000/api/v1";
 
 const register = (username, password) => {
-  return axios.post(`${API_URL}/register`, { username, password });
+  return axios.post(
+    `${API_URL}/user/register`,
+    { username, password },
+    {
+      withCredentials: true,
+    }
+  );
 };
 
 const login = (username, password) => {
-  return axios.post(`${API_URL}/login`, { username, password });
+  return axios.post(
+    `${API_URL}/user/login`,
+    { username, password },
+    {
+      withCredentials: true,
+    }
+  );
 };
 
 const addProduct = (token, product) => {
