@@ -41,6 +41,12 @@ const InventoryRow = ({ inventory, fetchProducts }) => {
             >
               Save
             </button>
+            <button
+              className="border w-full p-1 rounded bg-secondary/50 text-white"
+              onClick={() => setUpdteQnty(false)}
+            >
+              Cancel
+            </button>
           </div>
         ) : (
           <button

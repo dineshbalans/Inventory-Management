@@ -6,6 +6,11 @@ import AppError from "../utils/response-handlers/AppError.js";
 
 export const register = async (req, res, next) => {
   const { username, password } = req.body;
+
+  const user = await findUser({ username });
+
+  if (user) return next(new AppError("User already exists", 400));
+
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
 

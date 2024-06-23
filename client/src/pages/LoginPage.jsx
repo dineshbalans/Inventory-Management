@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { login } from "../services/api";
 import { FaUser, FaLock } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
@@ -12,6 +12,15 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (error) {
+      setTimeout(() => {
+        setError("");
+      }, 8000);
+    }
+  }, [error]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,17 +31,17 @@ const LoginPage = () => {
         setToken(data.data.token);
         navigate("/inventory");
       }
-
-      // setToken(data.token);
     } catch (error) {
+      setError(error.response.data.message);
       console.error("Login failed", error);
     }
   };
 
   return (
-    <form className="bg-white" onSubmit={handleSubmit}>
+    <form className="bg-white w-1/2" onSubmit={handleSubmit}>
       <h1 className="text-gray-800 font-bold text-2xl mb-1">Hello Again!</h1>
       <p className="text-sm font-normal text-gray-600 mb-7">Welcome Back</p>
+      {error && <p className="text-red-500 mt-2 mb-7 w-fit">{error}</p>}
       <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
         <FaUser className="text-gray-400" />
         <input

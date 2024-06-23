@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaLock, FaUser } from "react-icons/fa";
 import { register } from "../services/api";
 import { Link, useNavigate } from "react-router-dom";
@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 const RegisterPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -13,19 +14,27 @@ const RegisterPage = () => {
     try {
       const { data } = await register(username, password);
       console.log(data);
-      // setToken(data.token);
       if (data.statusCode === 200 || data.statusCode === 201) {
         navigate("/user/login");
       }
     } catch (error) {
+      setError(error.response.data.message);
       console.error("Register failed", error);
     }
   };
 
+  useEffect(() => {
+    if (error) {
+      setTimeout(() => {
+        setError("");
+      }, 8000);
+    }
+  }, [error]);
+
   return (
-    <form className="bg-white" onSubmit={handleSubmit}>
+    <form className="bg-white w-1/2" onSubmit={handleSubmit}>
       <h1 className="text-gray-800 font-bold text-2xl mb-7">Register!</h1>
-      {/* <p className="text-sm font-normal text-gray-600 mb-7">Welcome Back</p> */}
+      {error && <p className="text-red-500 mb-7 w-fit">{error}</p>}
       <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
         <FaUser className="text-gray-400" />
         <input

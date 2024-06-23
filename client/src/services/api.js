@@ -69,7 +69,7 @@ const createInvoice = (token, products) => {
 };
 
 const getUserInvoices = (token) => {
-  return axios.get(`${API_URL}/invoices`, {
+  return axios.get(`${API_URL}/invoice`, {
     headers: { Authorization: `Bearer ${token}` },
   });
 };

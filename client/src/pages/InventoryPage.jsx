@@ -113,8 +113,9 @@ const InventoryPage = () => {
   console.log(inventory);
 
   return (
-    <ProtectedRoute className="flex flex-col justify-center items-center gap-2 p-5">
+    <ProtectedRoute className="flex flex-col justify-center items-center gap-6 p-5">
       <form onSubmit={handleAddProduct} className="border w-1/2 p-4 space-y-5">
+        <h1 className="title text-center pb-3">Add Product</h1>
         <div>
           <LabelText text="Name" htmlFor="name" />
           <Input

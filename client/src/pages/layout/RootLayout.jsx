@@ -4,8 +4,8 @@ import { Outlet } from "react-router-dom";
 import { checkAuth } from "../../services/api";
 import { useDispatch, useSelector } from "react-redux";
 import { uiActions } from "../../store/uiSlice";
-import Cookies from "js-cookie";
 import { getToken } from "../../utils/token";
+import { ToastContainer } from "react-toastify";
 
 const RootLayout = () => {
   const dispatch = useDispatch();
