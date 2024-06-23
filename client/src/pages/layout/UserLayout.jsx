@@ -6,12 +6,12 @@ const UserLayout = () => {
     <div className="h-screen md:flex">
       <div className="relative overflow-hidden md:flex w-1/2 bg-gradient-to-tr from-secondary/90 to-primary i justify-around items-center hidden">
         <div>
-          <h1 className="text-white font-bold text-4xl font-sans">GoFinance</h1>
-          <p className="text-white mt-1">
-            The most popular peer to peer lending at SEA
-          </p>
+          <h1 className="text-white font-bold text-4xl font-sans">
+            Inventory Management System
+          </h1>
+          <p className="text-white text-lg mt-3">The most popular IMS at the market</p>
           <button
-            type="submit"
+            type="button"
             className="block w-28 bg-white text-primary mt-4 py-2 rounded-2xl font-bold mb-2"
           >
             Read More
