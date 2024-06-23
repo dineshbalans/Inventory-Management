@@ -1,4 +1,5 @@
 import { createProduct, find, findOne } from "../service/productService.js";
+import LinkedList from "../utils/LinkedList.js";
 import AppError from "../utils/response-handlers/AppError.js";
 import AppSuccess from "../utils/response-handlers/AppSuccess.js";
 
@@ -6,13 +7,16 @@ export const addProduct = async (req, res, next) => {
   const { name, description, quantity, price } = req.body;
   const userId = req.userId;
   try {
+    const history = new LinkedList();
+    history.add({ quantity, date: new Date() });
+
     const newProduct = await createProduct({
       userId,
       name,
       description,
       quantity,
       price,
-      history: [{ quantity }],
+      history: history.toArray(),
     });
     await newProduct.save();
 
@@ -28,9 +32,14 @@ export const updateProductQuantity = async (req, res, next) => {
   try {
     const product = await findOne({ _id: productId, userId });
     if (!product) return next(new AppError("Product not found", 404));
-    console.log(quantity)
+
     product.quantity = quantity;
-    product.history.push({ quantity });
+
+    const history = new LinkedList();
+    product.history.forEach((entry) => history.add(entry));
+    history.add({ quantity, date: new Date() });
+    product.history = history.toArray();
+
     await product.save();
 
     return next(
