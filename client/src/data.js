@@ -20,3 +20,21 @@ export const navBarData = [
     path: "/user/register",
   },
 ];
+
+export const navBarWLin = [
+  {
+    id: "nbdId_1",
+    name: "Home",
+    path: "/",
+  },
+  {
+    id: "nbdId_2",
+    name: "Login",
+    path: "/user/login",
+  },
+  {
+    id: "nbdId_3",
+    name: "Register",
+    path: "/user/register",
+  },
+];

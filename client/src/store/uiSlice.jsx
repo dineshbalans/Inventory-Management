@@ -7,6 +7,10 @@ const uiSlice = createSlice({
   },
   reducers: {
     setIsAuth(state, action) {
+      if (action.payload) {
+        state.isAuth = action.payload;
+        return;
+      }
       state.isAuth = !state.isAuth;
     },
   },

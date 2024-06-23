@@ -2,6 +2,12 @@ import axios from "axios";
 
 const API_URL = "http://localhost:5000/api/v1";
 
+const checkAuth = () => {
+  return axios.get(`${API_URL}/user/refresh`, {
+    withCredentials: true,
+  });
+};
+
 const register = (username, password) => {
   return axios.post(
     `${API_URL}/user/register`,
@@ -16,6 +22,16 @@ const login = (username, password) => {
   return axios.post(
     `${API_URL}/user/login`,
     { username, password },
+    {
+      withCredentials: true,
+    }
+  );
+};
+
+const logout = () => {
+  return axios.post(
+    `${API_URL}/user/logout`,
+    {},
     {
       withCredentials: true,
     }
@@ -57,8 +73,10 @@ const getUserInvoices = (token) => {
 };
 
 export {
+  checkAuth,
   register,
   login,
+  logout,
   addProduct,
   updateProductQuantity,
   getUserProducts,

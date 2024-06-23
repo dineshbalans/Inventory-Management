@@ -44,13 +44,30 @@ export const login = async (req, res, next) => {
 
     res.cookie("jwt", token, {
       httpOnly: true,
-      sameSite: "none",
+      // sameSite: "none",
       secure: false, // false for development only
     });
 
     return next(
       new AppSuccess({ user, token }, "User logged in successfully", 200)
     );
+  } catch (error) {
+    return next(new AppError(error.message, 400));
+  }
+};
+
+export const refresh = async (req, res, next) => {
+  try {
+    return next(new AppSuccess(req.user, "User refreshed successfully", 200));
+  } catch (error) {
+    return next(new AppError(error.message, 400));
+  }
+};
+
+export const logout = async (req, res, next) => {
+  try {
+    res.clearCookie("jwt");
+    return next(new AppSuccess(null, "User logged out successfully", 200));
   } catch (error) {
     return next(new AppError(error.message, 400));
   }
