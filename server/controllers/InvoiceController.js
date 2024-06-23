@@ -1,13 +1,15 @@
 import { create, find } from "../service/invoiceService.js";
 import { findOne } from "../service/productService.js";
+import Queue from "../utils/Queue.js";
 import AppError from "../utils/response-handlers/AppError.js";
 import AppSuccess from "../utils/response-handlers/AppSuccess.js";
+
+const invoiceQueue = new Queue();
 
 export const createInvoice = async (req, res, next) => {
   const { products } = req.body; // Array of { productId, quantity }
   const userId = req.userId;
 
-  console.log(products);
   try {
     let totalCost = 0;
     for (let { productId, quantity } of products) {
