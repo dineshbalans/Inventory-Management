@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 
 // Cloud MongoDB URL
 const DB_URL =
-  "mongodb+srv://dineshbalansrinivasan:dEhzlFoCnGA6S6Aw@cluster0.vvwnygw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+  "mongodb+srv://dineshbalansrinivasan:dEhzlFoCnGA6S6Aw@cluster0.vvwnygw.mongodb.net/Inventory?retryWrites=true&w=majority&appName=Cluster0";
 
 mongoose
   .connect(DB_URL, {

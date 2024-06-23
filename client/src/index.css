@@ -1,3 +1,44 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-primary leading-6 bg-white relative;
+  }
+
+  .input {
+    @apply border p-3 focus:outline-dotted text-ternary w-full
+    placeholder:text-gray-500;
+  }
+
+  .inputError {
+    @apply text-red-600 placeholder:text-red-600 border-red-600 input;
+  }
+
+  .inputTitle {
+    @apply text-2xl font-medium text-ternary py-6 flex;
+  }
+
+  .label {
+    @apply text-black flex items-center gap-1 pb-2;
+  }
+
+  .title {
+    @apply text-[35px] font-bold leading-tight text-ternary text-justify md:text-left;
+  }
+
+  .sub-title {
+    @apply text-[18px] leading-8 text-quadra;
+  }
+}
+
+.centerContainer {
+  @apply xxxl:container xxxl:mx-auto;
+}
+
+.bdrBlk {
+  @apply border border-black;
+}

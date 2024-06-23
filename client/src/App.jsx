@@ -1,7 +1,9 @@
-export default function App() {
+const App = () => {
   return (
-    <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
-  )
-}
+    <div className="flex justify-center items-center h-screen">
+      <h1 className="font-bold text-4xl">Hello world!</h1>
+    </div>
+  );
+};
+
+export default App;
