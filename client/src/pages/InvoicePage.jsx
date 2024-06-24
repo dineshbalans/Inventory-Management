@@ -5,9 +5,11 @@ import { productActions } from "../store/productSlice";
 import { getToken } from "../utils/token";
 import ProtectedRoute from "../components/ProtectedRoute";
 import InvoiceRow from "../components/InvoiceRow";
+import { useNavigate } from "react-router-dom";
 
 const InvoicePage = ({ token }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [totalCost, setTotalCost] = useState(0);
   const { products } = useSelector((state) => state.product);
@@ -73,6 +75,7 @@ const InvoicePage = ({ token }) => {
       setSelectedProducts([]);
       setTotalCost(0);
       fetchProducts();
+      navigate("/invoices");
     } catch (error) {
       console.error("Failed to create invoice", error);
     }
