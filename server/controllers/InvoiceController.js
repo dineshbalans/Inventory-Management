@@ -1,5 +1,6 @@
 import { create, find } from "../service/invoiceService.js";
 import { findOne } from "../service/productService.js";
+import LinkedList from "../utils/LinkedList.js";
 import Queue from "../utils/Queue.js";
 import AppError from "../utils/response-handlers/AppError.js";
 import AppSuccess from "../utils/response-handlers/AppSuccess.js";
@@ -14,8 +15,6 @@ export const createInvoice = async (req, res, next) => {
     let totalCost = 0;
     for (let { productId, quantity } of products) {
       const product = await findOne({ _id: productId, userId });
-      console.log(product);
-      console.log(quantity);
 
       if (!product || product.quantity < quantity) {
         return next(
@@ -25,10 +24,14 @@ export const createInvoice = async (req, res, next) => {
 
       totalCost += product.price * quantity;
       product.quantity -= quantity;
-      product.history.push({ quantity: product.quantity });
+
+      const history = new LinkedList();
+      product.history.forEach((entry) => history.add(entry));
+      history.add({ quantity: product.quantity, date: new Date() });
+      product.history = history.toArray();
+
       await product.save();
     }
-    console.log(userId, products, totalCost);
 
     const newInvoice = await create({ userId, products, totalCost });
     await newInvoice.save();
